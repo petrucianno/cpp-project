@@ -1,12 +1,7 @@
-#!/bin/sh
-
-# Remove the remote (you probably want your own instead).
-git remote remove origin
+#!/bin/bash
 
 # Revert to first commit, add and commit everything as single commit.
-git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)"
-
-git add --all
+git reset $(git commit-tree HEAD^{tree} -m "Bolier plate for C++ project added")
 
 name=$(git config user.name)
 email=$(git config user.email)
@@ -19,8 +14,9 @@ else
 	git commit --amend --author="$name <$email>" 
 fi
 
-# Initialize submodules: This is done by CMake, but there are ways to muck it
-# up if you does things in the wrong order. So just to be sure, we do it now.
-git submodule init
+# Initialize submodules: This should already be done when cloning, but there are ways to muck it
+# up if you do things in the wrong order. So just to be sure, we do it now.
+git submodule update --init --recursive
 
-git submodule update
+# Remove the remote (you probably want your own instead).
+git remote remove origin
