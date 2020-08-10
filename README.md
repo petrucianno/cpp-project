@@ -85,6 +85,19 @@ If the repository is activated with Coveralls/Codecov, then deployment to Travis
 upload this to Coveralls.io and/or Codecov.io
 
 ## Setup
+
+### Using the GitHub template
+Click the `Use this template` button to make a new repository from this template.
+
+**NB**: GitHub templates do not carry over submodules, which means you need to add those back _before_ you can build the project. Run the following after you have generated your new project:
+``` bash
+> git clone https://github.com/<your-username>/<your-repo-name>
+> git submodule add https://github.com/onqtam/doctest.git external/doctest
+> git commit -a --amend --no-edit
+> git push --force
+```
+
+### From command line
 When starting a new project, you probably don't want the history of this repository. To start fresh you can use
 the [setup script](setup.sh) as follows:
 ``` bash
@@ -93,3 +106,4 @@ the [setup script](setup.sh) as follows:
 > bash setup.sh
 ```
 The result is a fresh Git repository with one commit adding all files from the boiler plate. 
+
