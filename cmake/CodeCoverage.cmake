@@ -76,7 +76,7 @@ function(setup_target_for_coverage _targetname _testrunner _outputname)
 		# Capturing lcov counters and generating report
 		COMMAND ${LCOV_PATH} --directory . --capture --output-file ${_outputname}.info
 
-        COMMAND ${LCOV_PATH} --remove ${_outputname}.info '*/tests/*' '/usr/*' '*/external/*' '/Applications/*' --output-file ${_outputname}.info.cleaned
+        COMMAND ${LCOV_PATH} --remove ${_outputname}.info '*/tests/*' '/usr/*' '*/external/*' '*/3rd/*' '/Applications/*' --output-file ${_outputname}.info.cleaned
 		COMMAND ${GENHTML_PATH} -o ${_outputname} ${_outputname}.info.cleaned
         COMMAND ${LCOV_PATH} --list ${_outputname}.info.cleaned
 		
@@ -98,10 +98,10 @@ if (cmake_build_type_tolower STREQUAL "coverage")
 
 
     # Check prereqs
-    fund_program(GCOV_PATH gcov)
-    fund_program(LCOV_PATH lcov)
-    fund_program(GENHTML_PATH genhtml)
-    fund_program(GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/tests)
+    find_program(GCOV_PATH gcov)
+    find_program(LCOV_PATH lcov)
+    find_program(GENHTML_PATH genhtml)
+    find_program(GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/tests)
 
     if(NOT GCOV_PATH)
         message(FATAL_ERROR "gcov not found! Aborting...")
